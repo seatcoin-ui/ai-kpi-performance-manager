@@ -1,66 +1,54 @@
-# AI KPI Performance Manager — Version 1
+# AI KPI Performance Manager — Version 2
 
-This prototype is a Streamlit web app for logistics / warehouse performance management.
+## New in V2
+- Upload Excel (.xlsx/.xls) or CSV
+- Professional executive dashboard
+- Company and week filters
+- Green / Amber / Red status
+- Productivity
+- RTR / Efficiency
+- Quality
+- On-Time Delivery
+- Forecast accuracy
+- Cost performance
+- Safety
+- Actual vs budget hours
+- Forecast vs actual volume
+- Weekly company trends
+- Error Pareto
+- AI management review
+- CSV export of calculated KPI results
+- Company-specific KPI thresholds through the `Targets` sheet
 
-## What it does
-- Upload KPI data from CSV
-- Calculates productivity, quality, OTD, cost and safety performance
-- Creates an overall performance score
-- Shows Green / Amber / Red status
-- Compares companies
-- Shows weekly trends
-- Generates management analysis
-- Suggests top 3 corrective actions
-- Works without AI using built-in management rules
-- Can use the OpenAI Responses API when an API key and model are configured
+## Recommended workflow
+1. Open `AI_KPI_Data_Template_v2.xlsx`.
+2. Replace the demo rows in the `Data` sheet with your data.
+3. Adjust company targets in `Targets` if needed.
+4. Add error categories in `Errors` if you want Pareto analysis.
+5. Save the file.
+6. Upload it directly in the online KPI dashboard.
 
-## 1. Install Python
-Use Python 3.10 or newer.
+## Update your existing Streamlit app
+Your current GitHub repository can be reused.
 
-## 2. Install packages
-Open Command Prompt in this folder and run:
+Replace / upload these files:
+- `app.py`
+- `requirements.txt`
+- `AI_KPI_Data_Template_v2.xlsx`
 
-    pip install -r requirements.txt
+Commit the changes. Streamlit Community Cloud normally redeploys automatically.
 
-## 3. Start the dashboard
+## Optional OpenAI analysis
+The app works without an API key using rule-based management analysis.
 
-    streamlit run app.py
+For real AI analysis, add these in Streamlit:
+App -> Settings -> Secrets
 
-Your browser will open the KPI dashboard.
+```toml
+OPENAI_API_KEY = "your-key"
+OPENAI_MODEL = "gpt-6-astra"
+```
 
-## 4. Optional: activate AI analysis
+Never put your API key in GitHub.
 
-Set these environment variables before starting the app:
-
-Windows PowerShell:
-
-    $env:OPENAI_API_KEY="your_api_key_here"
-    $env:OPENAI_MODEL="your_available_model_name"
-    streamlit run app.py
-
-The app intentionally does not hard-code an AI model because model availability can differ by API account.
-
-## CSV format
-Required columns:
-
-- Week
-- Company
-- Volume
-- Actual_Hours
-- Target_Rate
-- Errors
-- OTD_pct
-- Cost_Actual
-- Cost_Budget
-- Safety_Incidents
-
-Use `sample_kpi_data.csv` as the template.
-
-## Current KPI rules
-- Productivity: Green >=100%, Amber >=95%, Red <95%
-- Quality: Green >=99.5%, Amber >=99.0%, Red <99.0%
-- OTD: Green >=98%, Amber >=95%, Red <95%
-- Cost: Green >=100% of budget performance, Amber >=95%, Red <95%
-- Safety: Green = 0 incidents, Amber = 1, Red >=2
-
-These targets should be customized per company/customer in Version 2.
+The app uses the OpenAI Responses API.
